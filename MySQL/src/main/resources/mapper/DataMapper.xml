@@ -19,7 +19,7 @@
 		values (#{contents}, #{date});
 	</insert>
 	
-	<select id="selectCountData" resultType="com.kbhc.blackcode.VO.DataVO">
+	<select id="selectCountData" resultType="int">
 		SELECT count(*)
 		FROM data
 	</select>

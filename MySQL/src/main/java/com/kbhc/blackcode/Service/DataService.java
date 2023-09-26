@@ -4,6 +4,6 @@ import com.kbhc.blackcode.VO.DataVO;
 
 public interface DataService {
 	
-	int insertData(DataVO dataVo);
-	int selectCountData();
+	void insertData();
+	void selectCountData();
 }

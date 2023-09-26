@@ -52,28 +52,4 @@ public class MainController {
 		return modelAndView;
 	}
 	
-	@GetMapping("total")
-	public int countData() {
-		System.out.println();
-		return dataService.selectCountData();
-	}
-	
-	int count = 0;
-	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
-	public ResponseEntity<Integer> insertData() {
-		DataVO dataVO = new DataVO();
-		Integer result = null;
-		count++ ;
-		dataVO.setDate(new Timestamp(System.currentTimeMillis()));
-		dataVO.setContents(Integer.toString(count));
-		try {
-			result = dataService.insertData(dataVO);
-		} catch (Exception e) {
-			dataVO.setContents("Exception : "+e);
-			result = dataService.insertData(dataVO);
-		}
-		logger.info(dataVO.getDate()+">>>"+count);
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-	
 }
