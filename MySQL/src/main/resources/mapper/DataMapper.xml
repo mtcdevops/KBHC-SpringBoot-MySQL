@@ -14,7 +14,7 @@
         FROM data;
     </select>
 	
-	<insert id="insertData" parameterType="DataVO">
+	<insert id="insertData" parameterType="com.kbhc.blackcode.VO.DataVO">
 		INSERT INTO data(contents, date)
 		values (#{contents}, #{date});
 	</insert>
