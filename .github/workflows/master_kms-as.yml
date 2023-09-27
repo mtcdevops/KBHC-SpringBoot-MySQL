@@ -42,7 +42,7 @@ jobs:
 
       # 4. artifact 생성 확인
       - name: List files in build/libs directory
-        run: ls BLACKCODE/build/libs # 4.프로젝트 변경시 수정사항
+        run: ls MySQL-2.7-11/build/libs # 4.프로젝트 변경시 수정사항
 
   deploy:
     runs-on: ubuntu-latest
