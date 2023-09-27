@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - KMS-as
+name: Build and deploy JAR app to Azure Web App - kms-as
 
 on:
   push:
@@ -19,33 +19,16 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v1
         with:
-          java-version: '11'
+          java-version: '17'
 
-      # 수정내역 
-      # 1. gradle buile를 위한 권한 부여
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-        working-directory: MySQL # 1.프로젝트 변경시 수정사항
-      
-      # 2. Gradle build 진행
-      - name: Build with Gradle
-        run : |
-          cd MySQL             # 해당 디렉토리로 이동 # 2.프로젝트 변경시 수정사항
-          ./gradlew build -x test # Gradle 빌드 실행
-      
-      # 3. 배포할 파일의 경로를 확인
-      - name: Check path
-        run: ls -lR
+      - name: Build with Maven
+        run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/MySQL/build/libs/*.jar'
-          
-      # 4. artifact 생성 확인
-      - name: List files in build/libs directory
-        run: ls BLACKCODE/build/libs # 4.프로젝트 변경시 수정사항
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -64,7 +47,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'KMS-as'
+          app-name: 'kms-as'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_636579F763F64B46BCDF027B3BFEA969 }}
-          package: '*SNAPSHOT.war'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FD0A8D4D0DEE4D6099BD139D6F8B3537 }}
+          package: '*.jar'
