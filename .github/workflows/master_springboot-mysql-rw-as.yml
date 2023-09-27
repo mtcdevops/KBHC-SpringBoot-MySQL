@@ -28,7 +28,7 @@ jobs:
       # 2. Gradle build에 필요한 권한 부여
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        working-directory: <프로젝트 폴더명>
+        working-directory: MySQL
 
       # 3. Gradle build 진행
       - name: Build with Gradle
