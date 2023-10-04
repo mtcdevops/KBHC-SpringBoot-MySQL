@@ -44,7 +44,7 @@ public class DataServiceImp implements DataService {
 	/**
 	 * 1초에 2번 Auto Insert
 	 */
-	@Scheduled(fixedRate = 250, zone = "Asia/Seoul")
+	@Scheduled(fixedRate = 1000, zone = "Asia/Seoul")
 	public void insertData() {
 		insertMethod("W");
 	}
@@ -71,6 +71,7 @@ public class DataServiceImp implements DataService {
 		try {
 			dm.insertData(dataVO);
 		} catch (Exception e) {
+			logger.info("Exception : "+e);
 			dataVO.setContents("Exception : "+e);
 			dm.insertData(dataVO);
 		}
