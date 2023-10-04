@@ -1,8 +1,8 @@
-CREATE TABLE data (
-	num int NOT NULL AUTO_INCREMENT,
-	contents text NULL,
+CREATE TABLE data ( 
+	num int NOT NULL auto_increment PRIMARY KEY, 
+	contents text NULL, 
 	date timestamp NULL,
-	CONSTRAINT data_pkey PRIMARY KEY (num)
+	rw varchar(2) not NULL
 );
 
 CREATE TABLE datainfo (
