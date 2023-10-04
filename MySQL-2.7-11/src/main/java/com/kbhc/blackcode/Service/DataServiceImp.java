@@ -44,20 +44,24 @@ public class DataServiceImp implements DataService {
 	/**
 	 * 1초에 2번 Auto Insert
 	 */
-	@Scheduled(fixedRate = 1000, zone = "Asia/Seoul")
+	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
 	public void insertData() {
-		insertMethod("W");
+		DBcrud insert = new DBcrud("WW",masterSqlSession);
+		insert.start();
+//		insertMethod("W");
 	}
 	
 	/**
 	 * 1초에 1번 Auto Select
 	 */
 	@Transactional(readOnly = true)
-	@Scheduled(fixedRate = 1000, zone = "Asia/Seoul")
+	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
 	public void selectCountData() {
 		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);
 		dm.selectCountData();
-		insertMethod("R");
+		DBcrud insert = new DBcrud("RR",masterSqlSession);
+		insert.start();
+//		insertMethod("R");
 	}
 	
 	int count = 0 ;
