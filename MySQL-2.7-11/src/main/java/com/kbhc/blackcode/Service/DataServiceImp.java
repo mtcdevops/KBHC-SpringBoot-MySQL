@@ -71,7 +71,7 @@ public class DataServiceImp implements DataService {
 		try {
 			dm.insertData(dataVO);
 		} catch (Exception e) {
-			logger.info("Exception : "+e);
+			logger.error("Exception : "+e);
 			dataVO.setContents("Exception : "+e);
 			dm.insertData(dataVO);
 		}
