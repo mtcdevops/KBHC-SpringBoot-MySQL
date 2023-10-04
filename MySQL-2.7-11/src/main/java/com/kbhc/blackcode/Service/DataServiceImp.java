@@ -53,7 +53,7 @@ public class DataServiceImp implements DataService {
 	 * 1초에 1번 Auto Select
 	 */
 	@Transactional(readOnly = true)
-	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
+	@Scheduled(fixedRate = 1000, zone = "Asia/Seoul")
 	public void selectCountData() {
 		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);
 		dm.selectCountData();
