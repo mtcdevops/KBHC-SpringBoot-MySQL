@@ -43,7 +43,7 @@
 			    <div class="card bg-danger text-white mb-4">
 			        <div class="card-body">WebApp Write</div>
 			        <div class="card-footer d-flex align-items-center justify-content-between">
-			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_WRITE() %></a>
+			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_WRITE()%></a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
 			    </div>

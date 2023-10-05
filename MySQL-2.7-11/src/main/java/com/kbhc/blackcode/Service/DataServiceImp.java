@@ -43,12 +43,22 @@ public class DataServiceImp implements DataService {
 		this.slaveSqlSession = slaveSqlSession;
 	}
 	
+	static String LocalWrite = "WW";
+	static String LocalRead = "RR";
+	static String WebAppWrite = "W";
+	static String WebAppRead = "R";
+	static String temp = "Local";
 	/**
 	 * 1초에 2번 Auto Insert
 	 */
 	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
 	public void insertData() {
-		DBcrud insert = new DBcrud("W",masterSqlSession);
+		DBcrud insert = null;
+		if(temp.equals("Local")) {
+			insert = new DBcrud(LocalWrite,masterSqlSession);
+		}else {
+			insert = new DBcrud(WebAppWrite,masterSqlSession);
+		}
 		insert.start();
 //		insertMethod("W");
 	}
@@ -61,7 +71,13 @@ public class DataServiceImp implements DataService {
 	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
 	public DataInfoVO selectCountData() {
 		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);
-		DBcrud insert = new DBcrud("R",masterSqlSession);
+		DBcrud insert = null;
+		if(temp.equals("Local")) {
+			insert = new DBcrud(LocalRead,masterSqlSession);
+		}else {
+			insert = new DBcrud(WebAppRead,masterSqlSession);
+		}
+		
 		insert.start();
 //		insertMethod("R");
 		return dm.selectCountData();
