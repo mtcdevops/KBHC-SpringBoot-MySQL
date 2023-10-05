@@ -24,9 +24,9 @@ public class DBcrud extends Thread {
 	private Logger logger = LoggerFactory.getLogger(DBcrud.class);
 	
 	static int count = 0;
+	static String msg = null;
 	@Override
 	public void run() {
-		String msg = null;
 		count ++;
 		DataVO dataVO = new DataVO();
 		dataVO.setDate(new Timestamp(System.currentTimeMillis()));
@@ -36,7 +36,9 @@ public class DBcrud extends Thread {
 		try {
 			dm.insertData(dataVO);
 		} catch (Exception e) {
-			logger.error("Exception : "+e);
+			if (msg != null) {
+				msg = null;
+			}
 			msg = "Exception : "+e;
 		} finally {
 			if (msg != null) {

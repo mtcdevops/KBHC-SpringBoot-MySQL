@@ -1,19 +1,19 @@
 package com.kbhc.blackcode.Controller;
 
-import java.sql.Timestamp;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kbhc.blackcode.Service.DataService;
-import com.kbhc.blackcode.VO.DataVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,10 +46,38 @@ public class MainController {
 		this.dataService = dataService;
 	}
 	
+	@GetMapping("index")
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView("index");
 		System.out.println("Main Index Page");
+		
+		modelAndView.addObject("list", dataService.selectEcxeption());
+		modelAndView.addObject("count", dataService.selectCountData());
+		
 		return modelAndView;
 	}
 	
+	@PostMapping("deleteException")
+	@ResponseBody
+	public String deleteException(@RequestBody String msg) {
+		String jsonData = URLDecoder.decode(msg, StandardCharsets.UTF_8);
+		System.out.println(jsonData);
+		if(dataService.deleteExceptionData().equals("OK")) {
+			return "data";
+		}else {
+			return "error";
+		}
+	}
+	
+	@PostMapping("deleteAllData")
+	@ResponseBody
+	public String deleteAllData(@RequestBody String msg) {
+		String jsonData = URLDecoder.decode(msg, StandardCharsets.UTF_8);
+		System.out.println(jsonData);
+		if(dataService.deleteAllData().equals("OK")) {
+			return "data";
+		}else {
+			return "error";
+		}
+	}
 }

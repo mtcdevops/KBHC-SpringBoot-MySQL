@@ -47,6 +47,9 @@ dependencies {
 
 	// Qeury Log 설정
 	implementation "org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16"
+	
+	// Json타입 설정
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
 
 }
 

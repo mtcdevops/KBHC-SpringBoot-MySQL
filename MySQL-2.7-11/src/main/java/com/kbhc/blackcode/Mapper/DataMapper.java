@@ -1,5 +1,7 @@
 package com.kbhc.blackcode.Mapper;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.kbhc.blackcode.VO.DataInfoVO;
@@ -16,4 +18,7 @@ public interface DataMapper {
 	
 	int insertData(DataVO dataVo);
 	DataInfoVO selectCountData();
+	List<DataVO> selectException();
+	void deleteExceptionData();
+	void deleteAllData();
 }

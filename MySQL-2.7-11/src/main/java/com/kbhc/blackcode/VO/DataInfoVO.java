@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @Data   // getter / setter / toString() 사용
 @NoArgsConstructor  // 생성자를 사용하지 않도록 선언
 public class DataInfoVO {
-    private String write;
-    private String read;
+    private String LOCAL_WRITE;
+    private String LOCAL_READ;
+    private String AS_WRITE;
+    private String AS_READ;
     private String total;
 }

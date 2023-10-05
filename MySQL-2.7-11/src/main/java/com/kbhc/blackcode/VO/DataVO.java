@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data   // getter / setter / toString() 사용
 @NoArgsConstructor  // 생성자를 사용하지 않도록 선언
 public class DataVO {
-//    private Integer num;
+    private Integer num;
     private String 	contents;
     private Timestamp date;
     private String rw = "r";

@@ -7,12 +7,12 @@
 -->
 <mapper namespace="com.kbhc.blackcode.Mapper.DataMapper">
 
-    <select id="selectDataList" resultType="com.kbhc.blackcode.VO.DataVO">
-        SELECT num,
-               contents,
-               date,
-        FROM data;
-    </select>
+	<select id="selectDataList" resultType="com.kbhc.blackcode.VO.DataVO">
+		SELECT num,
+			contents,
+			date,
+		FROM data;
+	</select>
 	
 	<insert id="insertData" parameterType="com.kbhc.blackcode.VO.DataVO">
 
@@ -24,11 +24,34 @@
 	<select id="selectCountData" resultType="com.kbhc.blackcode.VO.DataInfoVO">
 	
 		SELECT
-			(select count(*) from data where rw = 'W') as 'WRITE',
-			(select count(*) from data where rw = 'R') as 'READ',
+			(select count(*) from data where rw = 'WW') as 'LOCAL_WRITE',
+			(select count(*) from data where rw = 'RR') as 'LOCAL_READ',
+			(select count(*) from data where rw = 'W') as 'AS_WRITE',
+			(select count(*) from data where rw = 'R') as 'AS_READ',
 			count(*) as 'TOTAL'
 		FROM data;
 		
 	</select>
 	
+	<select id="selectException" resultType="com.kbhc.blackcode.VO.DataVO">
+		SELECT	
+				num,
+				contents,
+				date,
+				rw
+		FROM 	
+			 data
+		where 
+			contents like 'Exception%'
+		order by num desc
+	</select>
+	
+	<delete id="deleteExceptionData">
+		delete from data
+		where contents like 'Exception%' ;
+	</delete>
+	
+	<delete id="deleteAllData">
+		delete from data ;
+	</delete>
 </mapper>
