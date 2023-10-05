@@ -47,7 +47,7 @@ public class DataServiceImp implements DataService {
 	static String LocalRead = "RR";
 	static String WebAppWrite = "W";
 	static String WebAppRead = "R";
-	static String temp = "Local";
+	static String temp = "AS"; //배포시 : AS
 	/**
 	 * 1초에 2번 Auto Insert
 	 */
