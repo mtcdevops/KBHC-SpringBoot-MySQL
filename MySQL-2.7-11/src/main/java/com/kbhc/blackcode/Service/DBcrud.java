@@ -44,6 +44,7 @@ public class DBcrud extends Thread {
 			if (msg != null) {
 				dataVO.setContents(msg);
 				dm.insertData(dataVO);
+				msg = null;
 			}else {
 				if (!dataVO.getContents().equals(Integer.toString(count))){
 					dataVO.setContents(Integer.toString(count));

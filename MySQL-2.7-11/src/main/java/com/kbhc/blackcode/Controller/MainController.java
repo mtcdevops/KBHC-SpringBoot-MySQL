@@ -1,5 +1,8 @@
 package com.kbhc.blackcode.Controller;
 
+import java.io.File;
+import java.lang.management.ManagementFactory;
+import java.lang.management.OperatingSystemMXBean;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kbhc.blackcode.Service.DataService;
+import com.kbhc.blackcode.VO.PCMonitorVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,6 +58,10 @@ public class MainController {
 		modelAndView.addObject("list", dataService.selectEcxeption());
 		modelAndView.addObject("count", dataService.selectCountData());
 		
+		/* CPU 사용량 */
+		PCMonitorVO pcMonitorVO = new PCMonitorVO();
+//		modelAndView.addObject("pcMonitorVO", pcMonitorVO);
+		
 		return modelAndView;
 	}
 	
@@ -79,5 +87,14 @@ public class MainController {
 		}else {
 			return "error";
 		}
+	}
+	
+	public void getCPUProcess() {
+		OperatingSystemMXBean osbean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();		
+//		String cpuUsage = String.format("%.2f", osbean.getSystemCpuLoad() * 100);
+		
+		System.out.println(osbean.getAvailableProcessors());;
+		
+//		return list;
 	}
 }

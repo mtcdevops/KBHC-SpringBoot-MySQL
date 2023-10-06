@@ -1,8 +1,11 @@
+<%@page import="com.kbhc.blackcode.VO.PCMonitorVO"%>
 <%@page import="com.kbhc.blackcode.VO.DataInfoVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.kbhc.blackcode.VO.DataVO"%>
 <% ArrayList<DataVO> list = (ArrayList)request.getAttribute("list"); %>
 <% DataInfoVO dataInfo = (DataInfoVO)request.getAttribute("count");%>
+<% //PCMonitorVO pcMonitorVO = (PCMonitorVO)request.getAttribute("pcMonitorVO");%>
+<% PCMonitorVO pcMonitorVO = new PCMonitorVO();%>
 
 <main>
 	<div class="container-fluid px-4">
@@ -11,11 +14,11 @@
 			<li class="breadcrumb-item active"><%= dataInfo.getTotal() %></li>
 		</ol>
 		
-		<div class="row">
+		<div class="row" id="countData">
 			<div class="col-xl-3 col-md-6">
 			    <div class="card bg-primary text-white mb-4">
 			        <div class="card-body">LOCAL READ</div>
-			        <div class="card-footer d-flex align-items-center justify-content-between">
+			        <div class="card-footer d-flex align-items-center justify-content-between" id="LOCAL_READ">
 			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_READ() %></a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
@@ -24,7 +27,7 @@
 			<div class="col-xl-3 col-md-6">
 			    <div class="card bg-warning text-white mb-4">
 			        <div class="card-body">LOCAL WRITE</div>
-			        <div class="card-footer d-flex align-items-center justify-content-between">
+			        <div class="card-footer d-flex align-items-center justify-content-between" id="LOCAL_WRITE">
 			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_WRITE() %></a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
@@ -33,7 +36,7 @@
 			<div class="col-xl-3 col-md-6">
 			    <div class="card bg-success text-white mb-4">
 			        <div class="card-body">WebApp READ</div>
-			        <div class="card-footer d-flex align-items-center justify-content-between">
+			        <div class="card-footer d-flex align-items-center justify-content-between" id="WebApp_READ">
 			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getAS_READ()%></a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
@@ -42,7 +45,7 @@
 			<div class="col-xl-3 col-md-6">
 			    <div class="card bg-danger text-white mb-4">
 			        <div class="card-body">WebApp Write</div>
-			        <div class="card-footer d-flex align-items-center justify-content-between">
+			        <div class="card-footer d-flex align-items-center justify-content-between" id="WebApp_Write">
 			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_WRITE()%></a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
@@ -57,9 +60,42 @@
 						<i class="fas fa-chart-area me-1"></i>
 						Area Chart Example
 					</div>
-					<div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+					<div class="card-body" id="PCMonitor">
+						<table id="">
+							<thead>
+								<tr>
+									<th>CPU ======================</th>
+									<th>HDD ======================</th>
+									<th>Memory ======================</th>
+								</tr>
+							</thead>
+							
+							<tbody>
+								<tr>
+									<td>
+										<%= pcMonitorVO.getCPU_Usage()%><br>
+										<%= pcMonitorVO.getCPU_Usage_Percent()%><br>
+										<%= pcMonitorVO.getCPU_Idle_Percent()%>
+									</td>
+									<td>
+										<%= pcMonitorVO.getHDD_Usage() %><br>
+										<%= pcMonitorVO.getHDD_Usage_Percent() %><br>
+										<%= pcMonitorVO.getHDD_Idle() %><br>
+										<%= pcMonitorVO.getHDD_Idle_Percent() %><br>
+										<%= pcMonitorVO.getHDD_Total() %><br>
+									</td>
+									<td>
+										<%=pcMonitorVO.getMemory_Idle_Percent() %><br>
+										<%=pcMonitorVO.getMemory_FreePhysicalMemorySize() %><br>
+										<%=pcMonitorVO.getMemory_TotalPhysicalMemorySize() %><br>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
+			
 			<div class="col-xl-6">
 				<div class="card mb-4">
 					<div class="card-header">
@@ -79,7 +115,7 @@
 				<button id="deleteException"> DELETE Exception Data</button>
 				<button id="deleteAll"> DELETE ALL Data</button>
 			</div>
-			<div class="card-body">
+			<div class="card-body" id="ServerExceptionLog">
 				<table id="datatablesSimple">
 					<thead>
 						<tr>
@@ -173,4 +209,13 @@ $("#deleteAll").click(function(){
 		}
 	});
 });
+setInterval(reload, 1000);
+function reload(){
+    $("#LOCAL_READ").load(window.location.href + " #LOCAL_READ");
+    $("#LOCAL_WRITE").load(window.location.href + " #LOCAL_WRITE");
+    $("#WebApp_READ").load(window.location.href + " #WebApp_READ");
+    $("#WebApp_Write").load(window.location.href + " #WebApp_Write");
+    $("#PCMonitor").load(window.location.href + " #PCMonitor");
+    $("#ServerExceptionLog").load(window.location.href + " #ServerExceptionLog");
+}
 </script>
