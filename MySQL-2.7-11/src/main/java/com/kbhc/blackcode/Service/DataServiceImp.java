@@ -47,7 +47,7 @@ public class DataServiceImp implements DataService {
 	static String LocalRead = "RR";
 	static String WebAppWrite = "W";
 	static String WebAppRead = "R";
-	static String temp = "Local"; //배포시 : AS
+	static String temp = "AS"; //배포시 : AS
 	/**
 	 * 1초에 2번 Auto Insert
 	 */
@@ -72,7 +72,7 @@ public class DataServiceImp implements DataService {
 	public DataInfoVO selectCountData() {
 		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);
 		DBcrud insert = null;
-		if(temp.equals("AS")) {
+		if(temp.equals("Local")) {
 			insert = new DBcrud(LocalRead,masterSqlSession);
 		}else {
 			insert = new DBcrud(WebAppRead,masterSqlSession);
