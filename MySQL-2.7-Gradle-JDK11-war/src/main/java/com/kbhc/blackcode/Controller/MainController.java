@@ -6,6 +6,10 @@ import java.lang.management.OperatingSystemMXBean;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,11 +17,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kbhc.blackcode.Service.DataService;
 import com.kbhc.blackcode.VO.PCMonitorVO;
+import com.kbhc.blackcode.VO.UserVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,9 +57,12 @@ public class MainController {
 	}
 	
 	@GetMapping("index")
-	public ModelAndView index() {
+	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("index");
+		HttpSession session = request.getSession(false);
+		
 		System.out.println("Main Index Page");
+		System.out.println("SESSION : "+session.getAttribute("user"));
 		
 		modelAndView.addObject("list", dataService.selectEcxeption());
 		modelAndView.addObject("count", dataService.selectCountData());
@@ -64,6 +73,38 @@ public class MainController {
 		
 		return modelAndView;
 	}
+	
+	@GetMapping("login")
+	public ModelAndView getLogin() {
+		ModelAndView modelAndView = new ModelAndView("login");
+		System.out.println("Login Page");
+		
+		/* CPU 사용량 */
+		return modelAndView;
+	}
+	
+	@PostMapping("login")
+	@ResponseBody
+	public ModelAndView postLogin(HttpServletRequest request, HttpServletResponse response) {
+		
+		UserVO user = new UserVO();
+
+		user.setEmail(request.getParameter("inputEmail"));
+		user.setPassword(request.getParameter("inputPassword"));
+		
+		ModelAndView modelAndView = new ModelAndView("index");
+		
+		/* session 등록 */
+		// 세션을 생성하기 전에 기존의 세션 파기
+		request.getSession().invalidate();
+		HttpSession session = request.getSession(true);  // Session이 없으면 생성
+		// 세션에 userId를 넣어줌
+		session.setAttribute("user", user);
+		session.setMaxInactiveInterval(1800); // Session이 30분동안 유지
+		return modelAndView;
+	}
+	
+	
 	
 	@PostMapping("deleteException")
 	@ResponseBody
