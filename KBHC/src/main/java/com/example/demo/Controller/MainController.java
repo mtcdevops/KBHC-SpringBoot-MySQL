@@ -1,12 +1,7 @@
-package com.kbhc.blackcode.Controller;
+package com.example.demo.Controller;
 
-import java.io.File;
-import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
 import java.net.InetAddress;
-import java.net.URLDecoder;
 import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,15 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kbhc.blackcode.Service.DataService;
-import com.kbhc.blackcode.VO.PCMonitorVO;
-import com.kbhc.blackcode.VO.UserVO;
+import com.example.demo.VO.PCMonitorVO;
+import com.example.demo.VO.UserVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,13 +43,6 @@ public class MainController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	// 필드 주입이 아닌 생성자 주입형태로 사용합니다. '생성자 주입 형태'로 사용합니다.
-	private final DataService dataService;
-	public MainController(DataService dataService) {
-		super();
-		this.dataService = dataService;
-	}
-	
 	@GetMapping("index")
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("index");
@@ -72,8 +57,8 @@ public class MainController {
 		System.out.println("Main Index Page");
 		System.out.println("SESSION : "+session.getAttribute("user"));
 		
-		modelAndView.addObject("list", dataService.selectEcxeption());
-		modelAndView.addObject("count", dataService.selectCountData());
+		modelAndView.addObject("list", null);
+		modelAndView.addObject("count", null);
 		
 		/* CPU 사용량 */
 		PCMonitorVO pcMonitorVO = new PCMonitorVO();
@@ -134,36 +119,4 @@ public class MainController {
 		return true;
 	}
 	
-	@PostMapping("deleteException")
-	@ResponseBody
-	public String deleteException(@RequestBody String msg) {
-		String jsonData = URLDecoder.decode(msg, StandardCharsets.UTF_8);
-		System.out.println(jsonData);
-		if(dataService.deleteExceptionData().equals("OK")) {
-			return "data";
-		}else {
-			return "error";
-		}
-	}
-	
-	@PostMapping("deleteAllData")
-	@ResponseBody
-	public String deleteAllData(@RequestBody String msg) {
-		String jsonData = URLDecoder.decode(msg, StandardCharsets.UTF_8);
-		System.out.println(jsonData);
-		if(dataService.deleteAllData().equals("OK")) {
-			return "data";
-		}else {
-			return "error";
-		}
-	}
-	
-	public void getCPUProcess() {
-		OperatingSystemMXBean osbean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();		
-//		String cpuUsage = String.format("%.2f", osbean.getSystemCpuLoad() * 100);
-		
-		System.out.println(osbean.getAvailableProcessors());;
-		
-//		return list;
-	}
 }

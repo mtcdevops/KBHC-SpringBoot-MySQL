@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url:
+    driver-class-name:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/   # Controller가 리턴시 앞에붙는 경로 명
+      suffix: .jsp              # Controller가 리턴시 뒤에붙는 경로 명
+  devtools:
+    livereload:
+      enabled: true

@@ -5,17 +5,11 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
-group = 'com.kbhc'
+group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
 	sourceCompatibility = '11'
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
 }
 
 repositories {
@@ -28,12 +22,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	runtimeOnly 'org.postgresql:postgresql'
+	//runtimeOnly 'com.mysql:mysql-connector-j'
+	//runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
+	//testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
 
 	/*추가 의존성*/
 	
@@ -45,12 +39,12 @@ dependencies {
 	testImplementation("org.junit.platform:junit-platform-launcher:1.5.2") 
 	testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
 
-	// Qeury Log 설정
+	// Log 설정
 	implementation "org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16"
 	
 	// Json타입 설정
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
-	
+
 	// 화면 자동 반영
 	implementation 'org.springframework.boot:spring-boot-devtools'
 }

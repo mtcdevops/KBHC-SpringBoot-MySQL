@@ -3,8 +3,6 @@
 <%@page import="com.example.demo.VO.DataInfoVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.example.demo.VO.DataVO"%>
-<% ArrayList<DataVO> list = (ArrayList)request.getAttribute("list"); %>
-<% DataInfoVO dataInfo = (DataInfoVO)request.getAttribute("count");%>
 <% //PCMonitorVO pcMonitorVO = (PCMonitorVO)request.getAttribute("pcMonitorVO");%>
 <% PCMonitorVO pcMonitorVO = new PCMonitorVO();%>
 <% UserVO user = (UserVO)session.getAttribute("user"); %>
@@ -17,16 +15,17 @@
 		<h1 class="mt-4">MySQL Duplication Test</h1>
 		<%} %>
 		<ol class="breadcrumb mb-4">
-			<li class="breadcrumb-item active"><%= dataInfo.getTotal() %></li>
+			<li class="breadcrumb-item active">TOTAL</li>
 		</ol>
-		<button id="deleteSession">세션 삭제</button>
+		
+		<button id="deleteSession">Delete Session</button>
 		
 		<div class="row" id="countData">
 			<div class="col-xl-3 col-md-6">
 			    <div class="card bg-primary text-white mb-4">
 			        <div class="card-body">LOCAL READ</div>
 			        <div class="card-footer d-flex align-items-center justify-content-between" id="LOCAL_READ">
-			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_READ() %></a>
+			            <a class="small text-white stretched-link" href="#">-</a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
 			    </div>
@@ -35,7 +34,7 @@
 			    <div class="card bg-warning text-white mb-4">
 			        <div class="card-body">LOCAL WRITE</div>
 			        <div class="card-footer d-flex align-items-center justify-content-between" id="LOCAL_WRITE">
-			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_WRITE() %></a>
+			            <a class="small text-white stretched-link" href="#">-</a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
 			    </div>
@@ -44,7 +43,7 @@
 			    <div class="card bg-success text-white mb-4">
 			        <div class="card-body">WebApp READ</div>
 			        <div class="card-footer d-flex align-items-center justify-content-between" id="WebApp_READ">
-			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getAS_READ()%></a>
+			            <a class="small text-white stretched-link" href="#">-</a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
 			    </div>
@@ -53,7 +52,7 @@
 			    <div class="card bg-danger text-white mb-4">
 			        <div class="card-body">WebApp Write</div>
 			        <div class="card-footer d-flex align-items-center justify-content-between" id="WebApp_Write">
-			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_WRITE()%></a>
+			            <a class="small text-white stretched-link" href="#">-</a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
 			    </div>
@@ -141,18 +140,6 @@
 						</tr>
 					</tfoot>
 					<tbody>
-					<% for(int i=0; i<list.size(); i++) {%>
-						<tr>
-							<td><%= list.get(i).getNum() %></td>
-							<td><%= list.get(i).getContents() %></td>
-							<td><%= list.get(i).getDate() %></td>
-							<% if(list.get(i).getRw().equals("RR")) {%>
-								<td>READ</td>
-							<% }else{%>
-								<td>Write</td>
-							<% } %>
-						</tr>
-					<%} %>
 					</tbody>
 				</table>
 			</div>
