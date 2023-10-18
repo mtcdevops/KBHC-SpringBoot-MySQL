@@ -2,10 +2,13 @@ package com.example.demo.Controller;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.VO.Client;
 import com.example.demo.VO.PCMonitorVO;
 import com.example.demo.VO.UserVO;
 
@@ -43,6 +47,7 @@ public class MainController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	
 	@GetMapping("index")
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("index");
@@ -51,12 +56,16 @@ public class MainController {
 		if (session == null || session.getAttribute("user") == null) {
 			modelAndView.setViewName("redirect:login");
 			return modelAndView;
-//			return new ModelAndView("login");
 		}
 		
-		System.out.println("Main Index Page");
-		System.out.println("SESSION : "+session.getAttribute("user"));
 		
+		Client client = new Client();
+		String ip = client.getRemoteIP(request);
+		UserVO user = (UserVO) session.getAttribute("user");
+		user.setClientList(ip);
+		session.setAttribute("user", user);
+		modelAndView.addObject("clientTotal",0);
+		modelAndView.addObject("clientIP",ip);
 		modelAndView.addObject("list", null);
 		modelAndView.addObject("count", null);
 		

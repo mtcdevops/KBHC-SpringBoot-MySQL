@@ -1,7 +1,11 @@
 package com.example.demo.VO;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +17,51 @@ import lombok.NoArgsConstructor;
  */
 @Data   // getter / setter / toString() 사용
 @NoArgsConstructor  // 생성자를 사용하지 않도록 선언
-public class UserVO {
+public class UserVO implements HttpSessionBindingListener{
     private String email;
     private String password;
+    static private int totalClient = 0;
+    static private ArrayList<String> clientList = new ArrayList<>();;
+    
+    @Override
+	public void valueBound(HttpSessionBindingEvent event) {
+		// TODO Auto-generated method stub
+		HttpSessionBindingListener.super.valueBound(event);
+		System.out.println("Binding Event");
+		++totalClient;
+	}
+	
+	@Override
+	public void valueUnbound(HttpSessionBindingEvent event) {
+		// TODO Auto-generated method stub
+		System.out.println("Unbinding Event");
+		HttpSessionBindingListener.super.valueUnbound(event);
+		totalClient--;
+	}
+
+	public static int getTotalClient() {
+		return totalClient;
+	}
+
+	public static void setTotalClient(int totalClient) {
+		UserVO.totalClient = totalClient;
+	}
+
+	public static List<String> getClientList() {
+		return clientList;
+	}
+
+	public static void setClientList(String ip) {
+		if(UserVO.clientList.size() == 0) {
+			UserVO.clientList.add(ip);
+			System.out.println("clientList.get(0) is null");
+		}
+		for (int i = 0; i < clientList.size(); i++) {
+			if (UserVO.clientList.get(i) != null) {
+				if (!UserVO.clientList.get(i).equals(ip)) {
+					UserVO.clientList.add(ip);
+				}
+			}
+		}
+	}
 }

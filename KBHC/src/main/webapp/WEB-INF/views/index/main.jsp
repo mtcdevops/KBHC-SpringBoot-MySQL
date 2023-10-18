@@ -1,12 +1,12 @@
+<%@page import="com.example.demo.VO.Client"%>
 <%@page import="com.example.demo.VO.UserVO"%>
 <%@page import="com.example.demo.VO.PCMonitorVO"%>
 <%@page import="com.example.demo.VO.DataInfoVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.example.demo.VO.DataVO"%>
-<% //PCMonitorVO pcMonitorVO = (PCMonitorVO)request.getAttribute("pcMonitorVO");%>
 <% PCMonitorVO pcMonitorVO = new PCMonitorVO();%>
 <% UserVO user = (UserVO)session.getAttribute("user"); %>
-
+<% String clientIP = (String)request.getAttribute("clientIP"); %>
 <main>
 	<div class="container-fluid px-4">
 		<% if(user != null){ %>
@@ -15,7 +15,8 @@
 		<h1 class="mt-4">MySQL Duplication Test</h1>
 		<%} %>
 		<ol class="breadcrumb mb-4">
-			<li class="breadcrumb-item active">TOTAL</li>
+			<li class="breadcrumb-item active">TOTAL : <%=user.getTotalClient() %></li>
+			<li class="breadcrumb-item active">client ip : <%=clientIP %></li>
 		</ol>
 		
 		<button id="deleteSession">Delete Session</button>
@@ -114,32 +115,32 @@
 		</div>
 		
 		
-		<div class="card mb-4">
+		<div class="card mb-4" id="ServerExceptionLog">
 			<div class="card-header">
 				<i class="fas fa-table me-1"></i>
-				Server Exception Log
-				<button id="deleteException"> DELETE Exception Data</button>
-				<button id="deleteAll"> DELETE ALL Data</button>
+				SESSION IP LIST
 			</div>
-			<div class="card-body" id="ServerExceptionLog">
+			<div class="card-body">
 				<table id="datatablesSimple">
 					<thead>
 						<tr>
 							<th>Num</th>
-							<th>Contents</th>
-							<th>Date</th>
-							<th>Read/Write</th>
+							<th>ip</th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
 							<th>Num</th>
-							<th>Contents</th>
-							<th>Date</th>
-							<th>Read/Write</th>
+							<th>ip</th>
 						</tr>
 					</tfoot>
 					<tbody>
+						<% for(int i = 0 ; i < user.getClientList().size();i++){ %>
+						<tr>
+							<th>i</th>
+							<th><%=user.getClientList().get(i) %></th>
+						</tr>
+						<% } %>
 					</tbody>
 				</table>
 			</div>
@@ -231,10 +232,6 @@ $("#deleteSession").click(function(){
 
 setInterval(reload, 1000);
 function reload(){
-    $("#LOCAL_READ").load(window.location.href + " #LOCAL_READ");
-    $("#LOCAL_WRITE").load(window.location.href + " #LOCAL_WRITE");
-    $("#WebApp_READ").load(window.location.href + " #WebApp_READ");
-    $("#WebApp_Write").load(window.location.href + " #WebApp_Write");
     $("#PCMonitor").load(window.location.href + " #PCMonitor");
     $("#ServerExceptionLog").load(window.location.href + " #ServerExceptionLog");
 }
