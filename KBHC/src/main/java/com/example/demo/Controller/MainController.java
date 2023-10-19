@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.VO.Client;
+import com.example.demo.VO.PCMonitorChartVO;
 import com.example.demo.VO.PCMonitorVO;
 import com.example.demo.VO.UserVO;
 
@@ -48,7 +49,7 @@ public class MainController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
-	@GetMapping("index")
+	@GetMapping({"index",""})
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("index");
 		HttpSession session = request.getSession(false);
@@ -62,9 +63,7 @@ public class MainController {
 		Client client = new Client();
 		String ip = client.getRemoteIP(request);
 		UserVO user = (UserVO) session.getAttribute("user");
-		user.setClientList(ip);
 		session.setAttribute("user", user);
-		modelAndView.addObject("clientTotal",0);
 		modelAndView.addObject("clientIP",ip);
 		modelAndView.addObject("list", null);
 		modelAndView.addObject("count", null);
@@ -102,7 +101,8 @@ public class MainController {
 
 		user.setEmail(request.getParameter("inputEmail"));
 		user.setPassword(request.getParameter("inputPassword"));
-		
+		user.setClientIP(new Client().getRemoteIP(request));
+		System.out.println(user.toString());
 		ModelAndView modelAndView = new ModelAndView("index");
 		
 		/* session 등록 */
@@ -126,6 +126,14 @@ public class MainController {
 			return false;
 		}
 		return true;
+	}
+	
+	@PostMapping("chart")
+	@ResponseBody
+	public PCMonitorChartVO chart() {
+		PCMonitorChartVO chart=new PCMonitorChartVO();
+//		System.out.println("TEST"+chart.toString());
+		return new PCMonitorChartVO();
 	}
 	
 }

@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Data   // getter / setter / toString() 사용
 @NoArgsConstructor  // 생성자를 사용하지 않도록 선언
 public class UserVO implements HttpSessionBindingListener{
+	private String clientIP;
     private String email;
     private String password;
     static private int totalClient = 0;
@@ -29,6 +30,20 @@ public class UserVO implements HttpSessionBindingListener{
 		HttpSessionBindingListener.super.valueBound(event);
 		System.out.println("Binding Event");
 		++totalClient;
+		
+		if(UserVO.clientList.size() == 0) {
+			UserVO.clientList.add(clientIP);
+			System.out.println("clientList.get(0) is null");
+		}
+		for (int i = 0; i < clientList.size(); i++) {
+			if (UserVO.clientList.get(i) != null) {
+				if (!UserVO.clientList.get(i).equals(clientIP)) {
+					UserVO.clientList.add(clientIP);
+				}
+			}
+		}
+		System.out.println(UserVO.clientList);
+		
 	}
 	
 	@Override
@@ -37,6 +52,8 @@ public class UserVO implements HttpSessionBindingListener{
 		System.out.println("Unbinding Event");
 		HttpSessionBindingListener.super.valueUnbound(event);
 		totalClient--;
+		UserVO.clientList.remove(clientIP);
+		System.out.println(UserVO.clientList);
 	}
 
 	public static int getTotalClient() {

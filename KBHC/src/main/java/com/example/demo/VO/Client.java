@@ -20,7 +20,7 @@ public class Client {
 		    ip = request.getRemoteAddr() ;
 		}
 		
-		System.out.println("CLIENT IP :"+ip);
+//		System.out.println("CLIENT IP :"+ip);
 		return ip;
 	}
 }

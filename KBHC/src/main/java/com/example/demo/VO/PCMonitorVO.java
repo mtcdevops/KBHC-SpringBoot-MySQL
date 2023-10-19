@@ -3,7 +3,6 @@ package com.example.demo.VO;
 import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
-import java.sql.Timestamp;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

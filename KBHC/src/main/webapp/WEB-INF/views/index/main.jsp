@@ -20,52 +20,38 @@
 		</ol>
 		
 		<button id="deleteSession">Delete Session</button>
-		
-		<div class="row" id="countData">
-			<div class="col-xl-3 col-md-6">
-			    <div class="card bg-primary text-white mb-4">
-			        <div class="card-body">LOCAL READ</div>
-			        <div class="card-footer d-flex align-items-center justify-content-between" id="LOCAL_READ">
-			            <a class="small text-white stretched-link" href="#">-</a>
-			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-			        </div>
-			    </div>
+		<div class="card mb-4" >
+			<div class="card-header">
+				<i class="fas fa-table me-1"></i>
+				SESSION IP LIST
 			</div>
-			<div class="col-xl-3 col-md-6">
-			    <div class="card bg-warning text-white mb-4">
-			        <div class="card-body">LOCAL WRITE</div>
-			        <div class="card-footer d-flex align-items-center justify-content-between" id="LOCAL_WRITE">
-			            <a class="small text-white stretched-link" href="#">-</a>
-			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-			        </div>
-			    </div>
-			</div>
-			<div class="col-xl-3 col-md-6">
-			    <div class="card bg-success text-white mb-4">
-			        <div class="card-body">WebApp READ</div>
-			        <div class="card-footer d-flex align-items-center justify-content-between" id="WebApp_READ">
-			            <a class="small text-white stretched-link" href="#">-</a>
-			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-			        </div>
-			    </div>
-			</div>
-			<div class="col-xl-3 col-md-6">
-			    <div class="card bg-danger text-white mb-4">
-			        <div class="card-body">WebApp Write</div>
-			        <div class="card-footer d-flex align-items-center justify-content-between" id="WebApp_Write">
-			            <a class="small text-white stretched-link" href="#">-</a>
-			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-			        </div>
-			    </div>
+			<div class="card-body" id="ServerExceptionLog">
+				<table id="">
+					<thead>
+						<tr>
+							<th>Num  </th>
+							<th>|  ip ===============</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% for(int i = 0 ; i < user.getClientList().size();i++){ %>
+						<tr>
+							<th><%=i %></th>
+							<th>|<%=user.getClientList().get(i) %></th>
+						</tr>
+						<% } %>
+					</tbody>
+				</table>
 			</div>
 		</div>
-
+		
+		
 		<div class="row">
 			<div class="col-xl-6">
 				<div class="card mb-4">
 					<div class="card-header">
 						<i class="fas fa-chart-area me-1"></i>
-						Area Chart Example
+						Server Resource Info
 					</div>
 					<div class="card-body" id="PCMonitor">
 						<table id="">
@@ -107,44 +93,13 @@
 				<div class="card mb-4">
 					<div class="card-header">
 						<i class="fas fa-chart-bar me-1"></i>
-						Bar Chart Example
+						Server Resource Chart
 					</div>
-					<div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+					<div class="card-body"><canvas id="PCMonitorChart" width="100%" height="40"></canvas></div>
 				</div>
 			</div>
 		</div>
 		
-		
-		<div class="card mb-4" id="ServerExceptionLog">
-			<div class="card-header">
-				<i class="fas fa-table me-1"></i>
-				SESSION IP LIST
-			</div>
-			<div class="card-body">
-				<table id="datatablesSimple">
-					<thead>
-						<tr>
-							<th>Num</th>
-							<th>ip</th>
-						</tr>
-					</thead>
-					<tfoot>
-						<tr>
-							<th>Num</th>
-							<th>ip</th>
-						</tr>
-					</tfoot>
-					<tbody>
-						<% for(int i = 0 ; i < user.getClientList().size();i++){ %>
-						<tr>
-							<th>i</th>
-							<th><%=user.getClientList().get(i) %></th>
-						</tr>
-						<% } %>
-					</tbody>
-				</table>
-			</div>
-		</div>
 	</div>
 </main>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -232,7 +187,10 @@ $("#deleteSession").click(function(){
 
 setInterval(reload, 1000);
 function reload(){
+	//location.reload()
     $("#PCMonitor").load(window.location.href + " #PCMonitor");
     $("#ServerExceptionLog").load(window.location.href + " #ServerExceptionLog");
+    chartBar();
 }
+
 </script>
