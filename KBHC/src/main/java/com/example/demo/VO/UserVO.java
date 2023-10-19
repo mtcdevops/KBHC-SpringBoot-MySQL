@@ -19,10 +19,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor  // 생성자를 사용하지 않도록 선언
 public class UserVO implements HttpSessionBindingListener{
 	private String clientIP;
+	private String sessionID;
     private String email;
     private String password;
     static private int totalClient = 0;
-    static private ArrayList<String> clientList = new ArrayList<>();;
+    static private ArrayList<ClientVO> clientList = new ArrayList<>();;
     
     @Override
 	public void valueBound(HttpSessionBindingEvent event) {
@@ -30,15 +31,17 @@ public class UserVO implements HttpSessionBindingListener{
 		HttpSessionBindingListener.super.valueBound(event);
 		System.out.println("Binding Event");
 		++totalClient;
-		
+		ClientVO client = new ClientVO();
+		client.setIp(clientIP);
+		client.setSessionID(sessionID);
 		if(UserVO.clientList.size() == 0) {
-			UserVO.clientList.add(clientIP);
+			UserVO.clientList.add(client);
 			System.out.println("clientList.get(0) is null");
 		}
 		for (int i = 0; i < clientList.size(); i++) {
 			if (UserVO.clientList.get(i) != null) {
-				if (!UserVO.clientList.get(i).equals(clientIP)) {
-					UserVO.clientList.add(clientIP);
+				if (!UserVO.clientList.get(i).getIp().equals(clientIP)) {
+					UserVO.clientList.add(client);
 				}
 			}
 		}
@@ -64,21 +67,8 @@ public class UserVO implements HttpSessionBindingListener{
 		UserVO.totalClient = totalClient;
 	}
 
-	public static List<String> getClientList() {
+	public static List<ClientVO> getClientList() {
 		return clientList;
 	}
 
-	public static void setClientList(String ip) {
-		if(UserVO.clientList.size() == 0) {
-			UserVO.clientList.add(ip);
-			System.out.println("clientList.get(0) is null");
-		}
-		for (int i = 0; i < clientList.size(); i++) {
-			if (UserVO.clientList.get(i) != null) {
-				if (!UserVO.clientList.get(i).equals(ip)) {
-					UserVO.clientList.add(ip);
-				}
-			}
-		}
-	}
 }

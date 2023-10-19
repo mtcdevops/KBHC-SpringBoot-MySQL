@@ -18,8 +18,11 @@ public class PCMonitorChartVO {
 
 	File f = new File("/");
 
-	int CPU_Usage_Percent = (int) (Math.round(load*100.0));
-	int HDD_Usage = (int) ( Math.round( (f.getTotalSpace() - f.getUsableSpace())/(1024*1024)/ 1000.0));
-	int Memory_Idle_Percent = (int) ( Math.round( Double.valueOf(((com.sun.management.OperatingSystemMXBean) osBean).getFreePhysicalMemorySize()) / Double.valueOf( ((com.sun.management.OperatingSystemMXBean) osBean).getTotalPhysicalMemorySize() ) * 100));
+	int CPU_Usage_Percent 	= (int) (Math.round(load*100.0));
+	int CPU_Idle_Percent 	= (int) (100 - Math.round(load*100.0));
+	int HDD_Usage 			= (int) Math.round( Double.valueOf(f.getTotalSpace() - f.getUsableSpace())/ Double.valueOf(f.getTotalSpace()) * 100);
+	int HDD_Idle_Percent 	= (int) Math.round( Double.valueOf(f.getUsableSpace()) / Double.valueOf(f.getTotalSpace()) * 100);
+	int Memory_Percent 		= (int) (100 - ( Math.round( Double.valueOf(((com.sun.management.OperatingSystemMXBean) osBean).getFreePhysicalMemorySize()) / Double.valueOf( ((com.sun.management.OperatingSystemMXBean) osBean).getTotalPhysicalMemorySize() ) * 100)));
+	int Memory_Idle_Percent = (int) (Math.round( Double.valueOf(((com.sun.management.OperatingSystemMXBean) osBean).getFreePhysicalMemorySize()) / Double.valueOf( ((com.sun.management.OperatingSystemMXBean) osBean).getTotalPhysicalMemorySize() ) * 100));
 	
 }

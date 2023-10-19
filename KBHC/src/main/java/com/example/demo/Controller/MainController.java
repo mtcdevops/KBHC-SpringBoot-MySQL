@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -65,8 +67,6 @@ public class MainController {
 		UserVO user = (UserVO) session.getAttribute("user");
 		session.setAttribute("user", user);
 		modelAndView.addObject("clientIP",ip);
-		modelAndView.addObject("list", null);
-		modelAndView.addObject("count", null);
 		
 		/* CPU 사용량 */
 		PCMonitorVO pcMonitorVO = new PCMonitorVO();
@@ -76,7 +76,7 @@ public class MainController {
 	}
 	
 	@GetMapping("login")
-	public ModelAndView getLogin() {
+	public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("login");
 		System.out.println("Login Page");
 		
@@ -85,6 +85,7 @@ public class MainController {
 			modelAndView.addObject("ip", InetAddress.getLocalHost().getHostAddress());
 			System.out.println( InetAddress.getLocalHost().getHostName() );
 			System.out.println( InetAddress.getLocalHost().getHostAddress() );
+			System.out.println("Access Client IP : "+new Client().getRemoteIP(request));
 		}
 		catch( UnknownHostException e ){
 		  e.printStackTrace();
@@ -109,8 +110,10 @@ public class MainController {
 		// 세션을 생성하기 전에 기존의 세션 파기
 		request.getSession().invalidate();
 		HttpSession session = request.getSession(true);  // Session이 없으면 생성
+		user.setSessionID(session.getId());
 		// 세션에 userId를 넣어줌
 		session.setAttribute("user", user);
+		session.setAttribute("ip", user.getClientIP());
 		session.setMaxInactiveInterval(1800); // Session이 30분동안 유지
 //		return modelAndView;
 		return "redirect:/index";
@@ -126,6 +129,17 @@ public class MainController {
 			return false;
 		}
 		return true;
+	}
+	
+	@PostMapping("getSessionID")
+	@ResponseBody
+	public String getSessionID(HttpServletRequest request, HttpServletResponse response, @RequestBody String sessionID) {
+		try {
+			HttpSession session = request.getSession(false);
+			System.out.println("SESSION CHECK : "+session.getId());
+		} catch (Exception e) {
+		}
+		return sessionID;
 	}
 	
 	@PostMapping("chart")

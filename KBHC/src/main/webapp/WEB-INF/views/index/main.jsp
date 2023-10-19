@@ -14,11 +14,12 @@
 		<%}else{ %>
 		<h1 class="mt-4">MySQL Duplication Test</h1>
 		<%} %>
-		<ol class="breadcrumb mb-4">
-			<li class="breadcrumb-item active">TOTAL : <%=user.getTotalClient() %></li>
-			<li class="breadcrumb-item active">client ip : <%=clientIP %></li>
-		</ol>
-		
+		<div id="totalInfo">
+			<ol class="breadcrumb mb-4">
+				<li class="breadcrumb-item active">TOTAL : <%=user.getTotalClient() %></li>
+				<li class="breadcrumb-item active">client ip : <%=clientIP %></li>
+			</ol>
+		</div>
 		<button id="deleteSession">Delete Session</button>
 		<div class="card mb-4" >
 			<div class="card-header">
@@ -30,14 +31,18 @@
 					<thead>
 						<tr>
 							<th>Num  </th>
-							<th>|  ip ===============</th>
+							<th>|  ip =============== </th>
+							<th>|  session id ===================== </th>
+							<th>|  button</th>
 						</tr>
 					</thead>
 					<tbody>
 						<% for(int i = 0 ; i < user.getClientList().size();i++){ %>
 						<tr>
 							<th><%=i %></th>
-							<th>|<%=user.getClientList().get(i) %></th>
+							<th>|<%=user.getClientList().get(i).getIp() %></th>
+							<th id="<%=user.getClientList().get(i).getSessionID() %>">| ************************************** </th>
+							<th><button onclick="getSessionID(`<%=user.getClientList().get(i).getSessionID() %>`)">Check Session ID</button></th>
 						</tr>
 						<% } %>
 					</tbody>
@@ -185,11 +190,41 @@ $("#deleteSession").click(function(){
 	});
 });
 
+function getSessionID(ip){
+	console.log("getSessionID")
+	$.ajax({
+		type: 'post',
+		url : '<%=request.getContextPath()%>' + '/getSessionID',
+		async : true,            // ë¹ëê¸°í ì¬ë¶ (default : true)
+		/* headers : {              // Http header
+		      "Content-Type" : "application/json",
+		      "X-HTTP-Method-Override" : "POST"
+		    }, */
+		contentType: 'application/json', // ë°ì´í° íìì JSONì¼ë¡ ì¤ì 
+		dataType : 'text',       // ë°ì´í° íì (html, xml, json, text ë±ë±)
+		data : ip,
+		error : function(request, status, error) {
+			console.log("request : ",request);
+			console.log("status : ",status);
+			console.log("error : ",error);
+		},
+		success : function(result) {
+			console.log(result);
+			$("#"+result).text(result);
+			//location.reload();
+		}
+	});
+	
+}
+/* $("#getSessionID").click(function(){
+}); */
+
 setInterval(reload, 1000);
 function reload(){
 	//location.reload()
     $("#PCMonitor").load(window.location.href + " #PCMonitor");
     $("#ServerExceptionLog").load(window.location.href + " #ServerExceptionLog");
+    $("#totalInfo").load(window.location.href + " #totalInfo");
     chartBar();
 }
 

@@ -1,4 +1,4 @@
-
+//chartBar()
 var cpu = 0;
 var hdd = 0;
 var memory = 0;
@@ -21,11 +21,16 @@ function chartBar(){
 			console.log("error : ",error);
 		},
 		success : function(result) {
-			cpu = result.cpu_Usage_Percent;
-			hdd = result.hdd_Usage;
-			memory = result.memory_Idle_Percent;
-			console.log(cpu, hdd, memory);
-			PCMonitorChart = new Chart(ctx2, chartParam(cpu, hdd, 100-memory))
+			//console.log(result)
+			cpu 		= result.cpu_Usage_Percent;
+			cpu_idle 	= result.cpu_Idle_Percent;
+			hdd 		= result.hdd_Usage;
+			hdd_idle 	= result.hdd_Idle_Percent;
+			memory 		= result.memory_Percent;
+			memory_idle = result.memory_Idle_Percent;
+			
+			//console.log(cpu, hdd, memory);
+			PCMonitorChart = new Chart(ctx2, chartParam(cpu, cpu_idle, hdd, hdd_idle, memory, memory_idle))
 		}
 	});
 }
@@ -34,15 +39,15 @@ function chartBar(){
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
-function chartParam (cpu, hdd, memory) {
+function chartParam (cpu, cpu_idle, hdd, hdd_idle, memory, memory_idle) {
 	data = { type: 'bar',
 		data: {
-			labels: ["CPU", "HDD", "Memory"],
+			labels: ["CPU","CPU Idle", "HDD", "HDD Idle", "Memory", "Memory Idle"],
 			datasets: [{
 				label: "Revenue",
 				backgroundColor: "rgba(2,117,216,1)",
 				borderColor: "rgba(2,117,216,1)",
-				data: [cpu, hdd, memory],
+				data: [cpu, cpu_idle, hdd, hdd_idle, memory, memory_idle],
 			}],
 		},
 		options: {
@@ -55,14 +60,14 @@ function chartParam (cpu, hdd, memory) {
 						display: false
 					},
 					ticks: {
-						maxTicksLimit: 3
+						maxTicksLimit: 6
 					}
 				}],
 				yAxes: [{
 					ticks: {
 						min: 0,
 						max: 100,
-						maxTicksLimit: 3
+						maxTicksLimit: 6
 					},
 					gridLines: {
 						display: true

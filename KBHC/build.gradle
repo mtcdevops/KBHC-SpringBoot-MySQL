@@ -47,6 +47,9 @@ dependencies {
 
 	// 화면 자동 반영
 	implementation 'org.springframework.boot:spring-boot-devtools'
+	
+	// Session 핸들링 관련 설정
+	implementation 'org.springframework.session:spring-session-core'
 }
 
 tasks.named('test') {
