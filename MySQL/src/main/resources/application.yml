@@ -7,18 +7,20 @@ spring:
 #    username: master
 #    password: megazone!234
     # Resd replica 구성
+
     master: # Write(Insert, Update, Delete)
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-      jdbc-url: jdbc:log4jdbc:mysql://kms-mysql.mysql.database.azure.com:3306/test?serverTimezone=UTC
+      jdbc-url: jdbc:log4jdbc:mysql://10.143.115.100:3306/test?serverTimezone=UTC
       read-only: false
-      username: master
-      password: megazone!234
+      username: azureadmin
+      password: zpdlql1234!
+      
     slave:  # Read(Select)
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-      jdbc-url: jdbc:log4jdbc:mysql://kms-mysql-slave.mysql.database.azure.com:3306/test?serverTimezone=UTC
+      jdbc-url: jdbc:log4jdbc:mysql://replica.kn3mysqltest.com:3306/test?serverTimezone=UTC
       read-only: true # Slave DB는 Read만
-      username: master
-      password: megazone!234
+      username: azureadmin
+      password: zpdlql1234!
     
   mvc:
     view:

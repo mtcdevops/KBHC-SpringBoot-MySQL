@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.kbhc.blackcode.VO.DBServerInfoVO;
 import com.kbhc.blackcode.VO.DataInfoVO;
 import com.kbhc.blackcode.VO.DataVO;
 
@@ -21,4 +22,5 @@ public interface DataMapper {
 	List<DataVO> selectException();
 	void deleteExceptionData();
 	void deleteAllData();
+	DBServerInfoVO showServerID();
 }

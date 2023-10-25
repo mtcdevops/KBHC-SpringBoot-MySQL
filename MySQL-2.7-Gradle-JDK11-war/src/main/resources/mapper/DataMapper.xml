@@ -54,4 +54,8 @@
 	<delete id="deleteAllData">
 		delete from data ;
 	</delete>
+	
+	<select id="showServerID" resultType="com.kbhc.blackcode.VO.DBServerInfoVO">
+		SHOW VARIABLES LIKE 'server_id';
+	</select>
 </mapper>

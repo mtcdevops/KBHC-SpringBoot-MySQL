@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kbhc.blackcode.Mapper.DataMapper;
+import com.kbhc.blackcode.VO.DBServerInfoVO;
 import com.kbhc.blackcode.VO.DataInfoVO;
 import com.kbhc.blackcode.VO.DataVO;
 
@@ -47,7 +48,7 @@ public class DataServiceImp implements DataService {
 	static String LocalRead = "RR";
 	static String WebAppWrite = "W";
 	static String WebAppRead = "R";
-	static String temp = "AS"; //배포시 : AS
+	static String temp = "Local"; //배포시 : AS
 	/**
 	 * 1초에 2번 Auto Insert
 	 */
@@ -82,6 +83,7 @@ public class DataServiceImp implements DataService {
 //		insertMethod("R");
 		return dm.selectCountData();
 	}
+	
 	static String msg=null;
 	int count = 0 ;
 	public void insertMethod(String readOrWrite) {
@@ -137,5 +139,11 @@ public class DataServiceImp implements DataService {
 		}
 		return true;
 	}
-	
+
+	@Override
+	public DBServerInfoVO showServerID() {
+		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);
+		return dm.showServerID();
+	}
+
 }

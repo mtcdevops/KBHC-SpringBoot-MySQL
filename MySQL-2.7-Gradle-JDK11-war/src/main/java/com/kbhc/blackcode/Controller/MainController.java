@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.util.ServerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kbhc.blackcode.Service.DataService;
+import com.kbhc.blackcode.VO.DBServerInfoVO;
 import com.kbhc.blackcode.VO.PCMonitorVO;
 import com.kbhc.blackcode.VO.UserVO;
 
@@ -69,11 +71,22 @@ public class MainController {
 //			return new ModelAndView("login");
 		}
 		
-		System.out.println("Main Index Page");
-		System.out.println("SESSION : "+session.getAttribute("user"));
-		
 		modelAndView.addObject("list", dataService.selectEcxeption());
 		modelAndView.addObject("count", dataService.selectCountData());
+		
+		DBServerInfoVO serverInfo = dataService.showServerID();
+		String server_name="";
+		if (serverInfo.getValue().equals("1028961128")) {
+			server_name = "MASTER";
+		}
+		if (serverInfo.getValue().equals("2994926069")) {
+			server_name = "SLAVE1";
+		}
+		if (serverInfo.getValue().equals("4026358385")) {
+			server_name = "SLAVE2";
+		}
+		System.out.println(">>>>>>"+server_name.toString());
+		modelAndView.addObject("server_name", server_name);
 		
 		/* CPU 사용량 */
 		PCMonitorVO pcMonitorVO = new PCMonitorVO();

@@ -24,6 +24,7 @@ public class UserVO implements HttpSessionBindingListener{
     private String password;
     static private int totalClient = 0;
     static private ArrayList<ClientVO> clientList = new ArrayList<>();;
+    static ClientVO client;
     
     @Override
 	public void valueBound(HttpSessionBindingEvent event) {
@@ -31,7 +32,7 @@ public class UserVO implements HttpSessionBindingListener{
 		HttpSessionBindingListener.super.valueBound(event);
 		System.out.println("Binding Event");
 		++totalClient;
-		ClientVO client = new ClientVO();
+		client = new ClientVO();
 		client.setIp(clientIP);
 		client.setSessionID(sessionID);
 		if(UserVO.clientList.size() == 0) {
@@ -45,7 +46,11 @@ public class UserVO implements HttpSessionBindingListener{
 				}
 			}
 		}
-		System.out.println(UserVO.clientList);
+		
+		System.out.println("===== SESSION CLIENT LIST =====");
+		for (int i = 0; i < clientList.size(); i++) {
+			System.out.println(UserVO.clientList.get(i) + "\n");
+		}
 		
 	}
 	
@@ -55,8 +60,16 @@ public class UserVO implements HttpSessionBindingListener{
 		System.out.println("Unbinding Event");
 		HttpSessionBindingListener.super.valueUnbound(event);
 		totalClient--;
-		UserVO.clientList.remove(clientIP);
-		System.out.println(UserVO.clientList);
+		for (int i = 0; i < clientList.size(); i++) {
+			if (clientList.get(i).getIp().equals(clientIP)) {
+				UserVO.clientList.remove(client);
+			}
+		}
+		
+		System.out.println("===== SESSION CLIENT LIST =====");
+		for (int i = 0; i < clientList.size(); i++) {
+			System.out.println(UserVO.clientList.get(i) + "\n");
+		}
 	}
 
 	public static int getTotalClient() {

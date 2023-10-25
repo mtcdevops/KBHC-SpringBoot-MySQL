@@ -41,7 +41,7 @@
 						<tr>
 							<th><%=i %></th>
 							<th>|<%=user.getClientList().get(i).getIp() %></th>
-							<th id="<%=user.getClientList().get(i).getSessionID() %>">| ************************************** </th>
+							<th id="<%=user.getClientList().get(i).getSessionID() %>" onmouseover="getSessionID(`<%=user.getClientList().get(i).getSessionID() %>`)">| ************************************** </th>
 							<th><button onclick="getSessionID(`<%=user.getClientList().get(i).getSessionID() %>`)">Check Session ID</button></th>
 						</tr>
 						<% } %>
