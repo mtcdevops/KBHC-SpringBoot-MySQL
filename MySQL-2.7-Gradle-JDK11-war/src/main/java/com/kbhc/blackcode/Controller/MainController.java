@@ -76,7 +76,7 @@ public class MainController {
 		
 		DBServerInfoVO serverInfo = dataService.showServerID();
 		String server_name="";
-		if (serverInfo.getValue().equals("1028961128")) {
+		if (serverInfo.getValue().equals("1028961128")||serverInfo.getValue().equals("36407449")) {
 			server_name = "MASTER";
 		}
 		if (serverInfo.getValue().equals("2994926069")) {

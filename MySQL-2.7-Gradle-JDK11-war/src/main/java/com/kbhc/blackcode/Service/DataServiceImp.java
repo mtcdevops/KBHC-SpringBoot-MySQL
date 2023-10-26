@@ -69,7 +69,7 @@ public class DataServiceImp implements DataService {
 	 * @return 
 	 */
 	@Transactional(readOnly = true)
-	@Scheduled(fixedDelay = 2000, zone = "Asia/Seoul")
+//	@Scheduled(fixedDelay = 2000, zone = "Asia/Seoul")
 	public DataInfoVO selectCountData() {
 		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);
 		DBcrud insert = null;
@@ -139,7 +139,8 @@ public class DataServiceImp implements DataService {
 		}
 		return true;
 	}
-
+	
+	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
 	@Override
 	public DBServerInfoVO showServerID() {
 		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);

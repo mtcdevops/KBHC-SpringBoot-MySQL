@@ -35,7 +35,6 @@ public class DBcrud extends Thread {
 		DataMapper dm = sqlSession.getMapper(DataMapper.class);
 		try {
 			dm.insertData(dataVO);
-			dm.showServerID();
 		} catch (Exception e) {
 			if (msg != null) {
 				msg = null;
@@ -45,13 +44,11 @@ public class DBcrud extends Thread {
 			if (msg != null) {
 				dataVO.setContents(msg);
 				dm.insertData(dataVO);
-				dm.showServerID();
 				msg = null;
 			}else {
 				if (!dataVO.getContents().equals(Integer.toString(count))){
 					dataVO.setContents(Integer.toString(count));
 					dm.insertData(dataVO);
-					dm.showServerID();
 				}
 			}
 		}

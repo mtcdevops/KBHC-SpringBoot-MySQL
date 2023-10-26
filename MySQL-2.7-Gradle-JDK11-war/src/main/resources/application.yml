@@ -9,11 +9,11 @@ spring:
       read-only: false
       username: master
       password: megazone!234
-      
+#      
     slave:  # Read(Select)
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-      url: jdbc:log4jdbc:mysql://kms-mysql-slave.mysql.database.azure.com:3306/test?serverTimezone=UTC
-      jdbc-url: jdbc:log4jdbc:mysql://kms-mysql-slave.mysql.database.azure.com:3306/test?serverTimezone=UTC
+      url: jdbc:log4jdbc:mysql:loadbalance://kms-mysql-slave.mysql.database.azure.com:3306,kms-mysql-slave2.mysql.database.azure.com:3306/test?serverTimezone=UTC
+      jdbc-url: jdbc:log4jdbc:mysql:loadbalance://kms-mysql-slave.mysql.database.azure.com:3306,kms-mysql-slave2.mysql.database.azure.com:3306/test?serverTimezone=UTC
       read-only: true # Slave DB는 Read만
       username: master
       password: megazone!234
