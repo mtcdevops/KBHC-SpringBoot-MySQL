@@ -9,3 +9,8 @@ spring:
   devtools:
     livereload:
       enabled: true
+server:
+  forward-headers-strategy: framework
+  tomcat:
+    remote_ip_header: x-forwarded-for
+    protocol_header: x-forwarded-proto

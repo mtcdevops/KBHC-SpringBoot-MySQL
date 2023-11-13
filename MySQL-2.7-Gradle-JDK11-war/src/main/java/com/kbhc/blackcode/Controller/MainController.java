@@ -60,7 +60,7 @@ public class MainController {
 		this.dataService = dataService;
 	}
 	
-	@GetMapping("index")
+	@GetMapping(value = {"index", ""})
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("index");
 		HttpSession session = request.getSession(false);
