@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.kbhc.blackcode.VO.DBServerInfoVO;
 import com.kbhc.blackcode.VO.DataInfoVO;
 import com.kbhc.blackcode.VO.DataVO;
+import com.kbhc.blackcode.VO.DatabaseVO;
 
 /**
  * - 해당 파일은 xml 파일과 1:1 매핑되는 인터페이스 입니다. (환경파일 내에서 지정함)
@@ -23,4 +24,7 @@ public interface DataMapper {
 	void deleteExceptionData();
 	void deleteAllData();
 	DBServerInfoVO showServerID();
+	void insertDatabase(DatabaseVO database);
+	List<DatabaseVO> selectDBList();
+	DatabaseVO selectDB(String server_id);
 }

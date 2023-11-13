@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kbhc.blackcode.Service.DataService;
 import com.kbhc.blackcode.VO.DBServerInfoVO;
+import com.kbhc.blackcode.VO.DatabaseVO;
 import com.kbhc.blackcode.VO.PCMonitorVO;
 import com.kbhc.blackcode.VO.UserVO;
 
@@ -74,12 +76,13 @@ public class MainController {
 		modelAndView.addObject("list", dataService.selectEcxeption());
 		modelAndView.addObject("count", dataService.selectCountData());
 		
+		/* Database MASTER, SLAVE1, SLAVE2 구분 */
 		DBServerInfoVO serverInfo = dataService.showServerID();
 		String server_name="";
 		if (serverInfo.getValue().equals("1028961128")||serverInfo.getValue().equals("36407449")) {
 			server_name = "MASTER";
 		}
-		if (serverInfo.getValue().equals("2994926069")) {
+		if (serverInfo.getValue().equals("1343120162")) {
 			server_name = "SLAVE1";
 		}
 		if (serverInfo.getValue().equals("4026358385")) {
@@ -89,8 +92,12 @@ public class MainController {
 		modelAndView.addObject("server_name", server_name);
 		
 		/* CPU 사용량 */
-		PCMonitorVO pcMonitorVO = new PCMonitorVO();
 //		modelAndView.addObject("pcMonitorVO", pcMonitorVO);
+		
+		/* read replica 현황 */
+		List<DatabaseVO> dbList = dataService.selectAllDatabase();
+		modelAndView.addObject("dbList", dbList);
+		
 		
 		return modelAndView;
 	}

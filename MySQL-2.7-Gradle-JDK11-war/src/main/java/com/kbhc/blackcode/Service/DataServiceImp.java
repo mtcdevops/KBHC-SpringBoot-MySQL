@@ -15,6 +15,7 @@ import com.kbhc.blackcode.Mapper.DataMapper;
 import com.kbhc.blackcode.VO.DBServerInfoVO;
 import com.kbhc.blackcode.VO.DataInfoVO;
 import com.kbhc.blackcode.VO.DataVO;
+import com.kbhc.blackcode.VO.DatabaseVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -143,8 +144,29 @@ public class DataServiceImp implements DataService {
 	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
 	@Override
 	public DBServerInfoVO showServerID() {
-		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);
-		return dm.showServerID();
+		
+		// 1. show server_id 조회
+		DataMapper slaveDm = slaveSqlSession.getMapper(DataMapper.class);
+		DataMapper masterDm = masterSqlSession.getMapper(DataMapper.class);
+		DBServerInfoVO dbServer = slaveDm.showServerID();
+		
+		// 2. database server list 조회
+		System.out.println(dbServer.getValue());
+		String server_id = dbServer.getValue();
+		
+		if (slaveDm.selectDB(server_id) == null) {
+			DatabaseVO db = new DatabaseVO();
+			db.setServer_id(dbServer.getValue());
+			masterDm.insertDatabase(db);
+		}
+		
+		return slaveDm.showServerID();
+	}
+
+	@Override
+	public List<DatabaseVO> selectAllDatabase() {
+		DataMapper slaveDm = slaveSqlSession.getMapper(DataMapper.class);
+		return slaveDm.selectDBList();
 	}
 
 }

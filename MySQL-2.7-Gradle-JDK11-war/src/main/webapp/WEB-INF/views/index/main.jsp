@@ -1,3 +1,5 @@
+<%@page import="com.kbhc.blackcode.VO.DatabaseVO"%>
+<%@page import="java.util.List"%>
 <%@page import="org.apache.catalina.util.ServerInfo"%>
 <%@page import="com.kbhc.blackcode.VO.UserVO"%>
 <%@page import="com.kbhc.blackcode.VO.PCMonitorVO"%>
@@ -11,6 +13,7 @@
 <% PCMonitorVO pcMonitorVO = new PCMonitorVO();%>
 <% UserVO user = (UserVO)session.getAttribute("user"); %>
 <% String server_name = (String)request.getAttribute("server_name");%>
+<% List<DatabaseVO> dbList = (List<DatabaseVO>)request.getAttribute("dbList"); %>
 
 <main>
 	<div class="container-fluid px-4">
@@ -19,10 +22,10 @@
 		<%}else{ %>
 		<h1 class="mt-4">MySQL Duplication Test</h1>
 		<%} %>
-		<ol class="breadcrumb mb-4">
-			<li class="breadcrumb-item active"><%= dataInfo.getTotal() %> 현재 SLAVE DB : [<%=server_name %>]</li>
+		<ol class="breadcrumb mb-4"> 
+			<li class="breadcrumb-item active"><%= dataInfo.getTotal() %> Read Replica DB : [<%=server_name %>]</li>
 		</ol>
-		<button id="deleteSession">세션 삭제</button>
+		<button id="deleteSession">Delete Session</button>
 		
 		<div class="row" id="countData">
 			<div class="col-xl-3 col-md-6">
@@ -110,9 +113,24 @@
 				<div class="card mb-4">
 					<div class="card-header">
 						<i class="fas fa-chart-bar me-1"></i>
-						Bar Chart Example
+						Read Replica DB list
 					</div>
-					<div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+					<div class="card-body">
+						<table>
+							<tr>
+								<th>No</th>
+								<th>| Database Server id</th>
+								<th>| Read replica name</th>
+							</tr>
+							<% for(int i=0; i<dbList.size(); i++) { %>
+							<tr>
+								<td><%= i %></td>
+								<td>| <%= dbList.get(i).getServer_id() %></td>
+								<td>| <%= dbList.get(i).getServer_name() %></td>
+							</tr>
+							<%} %>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
