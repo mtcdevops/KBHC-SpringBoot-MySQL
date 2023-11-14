@@ -1,5 +1,7 @@
 # 고급 로드 밸런싱 및 장애 내구성 구성
 
+Connector/J는 MySQL 클러스터 또는 다중 소스 배포에 유용한 로드 밸런싱 구현을 제공합니다. 이는 "Connector/J를 사용한 Load Balancing 구성"에서 설명한 것과 동일한 구현으로 읽기 전용 레플리카 간의 로드를 균형있게 분산하는 데 사용됩니다.
+
 ```yml
 spring:
   datasource:
