@@ -39,13 +39,13 @@ CREATE TABLE `serverlist` (
 ```
 
 # SKILL STACK
-- 개발도구
-      - JDK 11
-      - SpringBoot 2.7.16
-      - Gradle 8.2.1
-      - Azure Database For MySQL
-            - read/write 구성
-      - war
+## 개발도구
+- JDK 11
+- SpringBoot 2.7.16
+- Gradle 8.2.1
+- Azure Database For MySQL
+- read/write 구성
+- war
 
 # 1. 의존성 추가
 ```build.gradle
