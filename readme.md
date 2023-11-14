@@ -84,6 +84,8 @@ dependencies {
 ```
 
 2. application.yml 설정
+Database read replication 관련 내용으로는 아래 링크를 참고 바랍니다.
+[링크](https://github.com/mtcdevops/KBHC-SpringBoot-MySQL/tree/master/Document)
 ```yml
 spring:
   # MySQL DB 설정
