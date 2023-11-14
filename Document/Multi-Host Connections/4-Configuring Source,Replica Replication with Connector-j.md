@@ -7,7 +7,8 @@ jdbc:mysql:replication://[source host][:port],[replica host 1][:port][,[replica 
 ```
 사용자는 allowSourceDownConnections=true 속성을 지정하여 소스 호스트에 연결할 수 없어도 Connection 개체를 생성할 수 있습니다. 이러한 Connection 개체는 읽기 전용임을 보고하며, isSourceConnection()은 이들에 대해 false를 반환합니다. Connection.setReadOnly(false)가 호출될 때 Connection은 사용 가능한 소스 호스트를 테스트하며, 소스에 연결을 설정할 수 없으면 SQLException을 throw하거나 호스트가 사용 가능하면 소스 연결로 전환합니다.
 
-사용자는 allowReplicasDownConnections=true 속성을 지정하여 레플리카 호스트에 연결할 수 없어도 Connection 개체를 생성할 수 있습니다. 그런 다음 Connection은 실행 중에 Connection.setReadOnly(true) (아래 메서드에 대한 설명 참조)가 호출될 때 사용 가능한 레플리카 호스트를 테스트하며, 레플리카에 연결을 설정할 수 없으면 readFromSourceWhenNoReplicas 속성이 "true"로 설정되어 있지 않은 경우 SQLException을 throw합니다 
+사용자는 allowReplicasDownConnections=true 속성을 지정하여 레플리카 호스트에 연결할 수 없어도 Connection 개체를 생성할 수 있습니다. 그런 다음 Connection은 실행 중에 Connection.setReadOnly(true) (아래 메서드에 대한 설명 참조)가 호출될 때 사용 가능한 레플리카 호스트를 테스트하며, 레플리카에 연결을 설정할 수 없으면 readFromSourceWhenNoReplicas 속성이 "true"로 설정되어 있지 않은 경우 SQLException을 throw합니다.
+
 
 ```yml
 spring:
