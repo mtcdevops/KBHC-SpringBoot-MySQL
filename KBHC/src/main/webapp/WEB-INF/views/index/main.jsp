@@ -1,3 +1,4 @@
+
 <%@page import="com.example.demo.VO.Client"%>
 <%@page import="com.example.demo.VO.UserVO"%>
 <%@page import="com.example.demo.VO.PCMonitorVO"%>
@@ -12,7 +13,7 @@
 		<% if(user != null){ %>
 		<h1 class="mt-4">SESSION : <%=user.getEmail() %></h1>
 		<%}else{ %>
-		<h1 class="mt-4">MySQL Duplication Test</h1>
+		<h1 class="mt-4">X-Forwarded-For</h1>
 		<%} %>
 		<div id="totalInfo">
 			<ol class="breadcrumb mb-4">

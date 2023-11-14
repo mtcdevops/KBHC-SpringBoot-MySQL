@@ -36,6 +36,7 @@ public class DataServiceImp implements DataService {
 //	private final DataSource master;
 //	private final DataSource slave;
 	
+	private int speed = 1000;
 	public DataServiceImp(SqlSession sqlSession,
 			@Qualifier("masterSqlSession") SqlSession masterSqlSession,
 			@Qualifier("slaveSqlSession") SqlSession slaveSqlSession) {
@@ -55,64 +56,34 @@ public class DataServiceImp implements DataService {
 	 */
 	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
 	public void insertData() {
-		DBcrud insert = null;
+		AutoCRUD_thread insert = null;
 		if(temp.equals("Local")) {
-			insert = new DBcrud(LocalWrite,masterSqlSession);
+			insert = new AutoCRUD_thread(LocalWrite,masterSqlSession);
 		}else {
-			insert = new DBcrud(WebAppWrite,masterSqlSession);
+			insert = new AutoCRUD_thread(WebAppWrite,masterSqlSession);
 		}
-		insert.start();
-//		insertMethod("W");
+		insert.start(); // Thread 시작
+		// insertMethod("W");
 	}
 	
 	/**
-	 * 1초에 1번 Auto Select
+	 * 1초에 1번 Auto Select > 화면이 호출될때마다 자동으로 Select됨
 	 * @return 
 	 */
 	@Transactional(readOnly = true)
 //	@Scheduled(fixedDelay = 2000, zone = "Asia/Seoul")
 	public DataInfoVO selectCountData() {
 		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);
-		DBcrud insert = null;
+		AutoCRUD_thread insert = null;
 		if(temp.equals("Local")) {
-			insert = new DBcrud(LocalRead,masterSqlSession);
+			insert = new AutoCRUD_thread(LocalRead,masterSqlSession);
 		}else {
-			insert = new DBcrud(WebAppRead,masterSqlSession);
+			insert = new AutoCRUD_thread(WebAppRead,masterSqlSession);
 		}
 		
-		insert.start();
+		insert.start(); // Thread 시작
 //		insertMethod("R");
 		return dm.selectCountData();
-	}
-	
-	static String msg=null;
-	int count = 0 ;
-	public void insertMethod(String readOrWrite) {
-		count ++;
-		DataVO dataVO = new DataVO();
-		dataVO.setDate(new Timestamp(System.currentTimeMillis()));
-		dataVO.setContents(Integer.toString(count));
-		dataVO.setRw(readOrWrite);
-		DataMapper dm = masterSqlSession.getMapper(DataMapper.class);
-		try {
-			dm.insertData(dataVO);
-		} catch (Exception e) {
-			if (msg != null) {
-				msg = null;
-			}
-			msg = "Exception : "+e;
-		} finally {
-			if (msg != null) {
-				dataVO.setContents(msg);
-				dm.insertData(dataVO);
-			}else {
-				if (!dataVO.getContents().equals(Integer.toString(count))){
-					dataVO.setContents(Integer.toString(count));
-					dm.insertData(dataVO);
-				}
-			}
-		}
-		logger.info(dataVO.getDate()+">>>"+count);
 	}
 
 	@Override

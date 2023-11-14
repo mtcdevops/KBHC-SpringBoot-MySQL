@@ -67,7 +67,11 @@
 	</insert>
 	
 	<select id="selectDBList" resultType="com.kbhc.blackcode.VO.DatabaseVO">
-		SELECT * FROM serverlist
+		select
+			server_num ,
+			server_id ,
+			concat("DB SERVER ", server_num) AS server_name
+		from serverlist ;
 	</select>
 	
 	<select id="selectDB" parameterType="java.lang.String" resultType="com.kbhc.blackcode.VO.DatabaseVO">

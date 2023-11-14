@@ -118,13 +118,13 @@
 					<div class="card-body">
 						<table>
 							<tr>
-								<th>No</th>
+								<th>| No</th>
 								<th>| Database Server id</th>
 								<th>| Read replica name</th>
 							</tr>
 							<% for(int i=0; i<dbList.size(); i++) { %>
 							<tr>
-								<td><%= i %></td>
+								<td>| <%= dbList.get(i).getServer_num() %></td>
 								<td>| <%= dbList.get(i).getServer_id() %></td>
 								<td>| <%= dbList.get(i).getServer_name() %></td>
 							</tr>

@@ -9,19 +9,19 @@ import org.slf4j.LoggerFactory;
 import com.kbhc.blackcode.Mapper.DataMapper;
 import com.kbhc.blackcode.VO.DataVO;
 
-public class DBcrud extends Thread {
+public class AutoCRUD_thread extends Thread {
 	
 	String rw;
 	private final SqlSession sqlSession;
 	
-	public DBcrud(String rw,
+	public AutoCRUD_thread(String rw,
 			SqlSession sqlSession) {
 		super();
 		this.rw = rw;
 		this.sqlSession = sqlSession;
 	}
 	
-	private Logger logger = LoggerFactory.getLogger(DBcrud.class);
+	private Logger logger = LoggerFactory.getLogger(AutoCRUD_thread.class);
 	
 	static int count = 0;
 	static String msg = null;

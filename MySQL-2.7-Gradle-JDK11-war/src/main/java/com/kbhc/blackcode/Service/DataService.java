@@ -9,9 +9,10 @@ import com.kbhc.blackcode.VO.DatabaseVO;
 
 public interface DataService {
 	
-	void insertData();
-	DataInfoVO selectCountData();
+//	void insertData();
+//	DataInfoVO selectCountData();
 	List<DataVO> selectEcxeption();
+	DataInfoVO selectCountData();
 	Boolean deleteExceptionData();
 	Boolean deleteAllData();
 	DBServerInfoVO showServerID();
