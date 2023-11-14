@@ -8,3 +8,27 @@ MySQL Connector/J는 서버 장애 내구성을 지원합니다. 장애 내구�
 ```
 jdbc:mysql://[primary host][:port],[secondary host 1][:port][,[secondary host 2][:port]]...[/[database]][?propertyName1=propertyValue1[&propertyName2=propertyValue2]...]
 ```
+
+---
+
+```yml
+# MySQL Connector/J를 사용하여 서버 장애 조치 구성
+spring:
+  datasource:
+    url: jdbc:mysql://[primary host][:port],[secondary host 1][:port][,[secondary host 2][:port]]...[/[database]]
+    username: your-username
+    password: your-password
+
+    # 서버 장애 조치 관련 프로퍼티 설정
+    failover:
+      readOnly: true # or false
+      secondsBeforeRetrySource: 60
+      queriesBeforeRetrySource: 10
+      retriesAllDown: 3
+      autoReconnect: true # or false
+      autoReconnectForPools: true # or false
+```
+
+위의 YAML 코드는 Spring Boot 애플리케이션의 application.yml 파일에 작성할 MySQL Connector/J를 사용하여 서버 장애 조치 구성 예제입니다. 이 설정은 주된 호스트(primary host)와 여러 보조 호스트(secondary host)를 포함하는 연결 URL을 설정하고, 서버 장애 조치에 관련된 여러 프로퍼티를 지정합니다.
+
+주의: your-username 및 your-password를 실제 데이터베이스 자격 증명으로 대체해야 합니다. 또한, failover와 관련된 프로퍼티 값은 프로덕션 환경에 맞게 조절해야 합니다.
