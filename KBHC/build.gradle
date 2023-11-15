@@ -53,7 +53,8 @@ dependencies {
 	
 	/*log4j2 의존성 추가*/
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
+	
 }
 
 /*logback 의존성 제거*/

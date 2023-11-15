@@ -7,6 +7,9 @@ import java.util.List;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,13 +21,16 @@ import lombok.NoArgsConstructor;
 @Data   // getter / setter / toString() 사용
 @NoArgsConstructor  // 생성자를 사용하지 않도록 선언
 public class UserVO implements HttpSessionBindingListener{
+	private int num;
 	private String clientIP;
 	private String sessionID;
     private String email;
     private String password;
     static private int totalClient = 0;
-    static private ArrayList<ClientVO> clientList = new ArrayList<>();;
+    static private List<ClientVO> clientList = new ArrayList<>();;
     static ClientVO client;
+    
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     
     @Override
 	public void valueBound(HttpSessionBindingEvent event) {
@@ -35,10 +41,15 @@ public class UserVO implements HttpSessionBindingListener{
 		client = new ClientVO();
 		client.setIp(clientIP);
 		client.setSessionID(sessionID);
+		client.setNum(num);
+		
+		
+		/* 기존 Session List 로직 
 		if(UserVO.clientList.size() == 0) {
 			UserVO.clientList.add(client);
 			System.out.println("clientList.get(0) is null");
 		}
+		
 		for (int i = 0; i < clientList.size(); i++) {
 			if (UserVO.clientList.get(i) != null) {
 				if (!UserVO.clientList.get(i).getIp().equals(clientIP)) {
@@ -46,6 +57,9 @@ public class UserVO implements HttpSessionBindingListener{
 				}
 			}
 		}
+		 * */
+		
+		UserVO.clientList.add(client);
 		
 		System.out.println("===== SESSION CLIENT LIST =====");
 		for (int i = 0; i < clientList.size(); i++) {
@@ -60,11 +74,17 @@ public class UserVO implements HttpSessionBindingListener{
 		System.out.println("Unbinding Event");
 		HttpSessionBindingListener.super.valueUnbound(event);
 		totalClient--;
+		
 		for (int i = 0; i < clientList.size(); i++) {
-			if (clientList.get(i).getIp().equals(clientIP)) {
+			if (clientList.get(i).getSessionID().equals(sessionID)) {
 				UserVO.clientList.remove(client);
+				System.out.println("Session Delete Success : "+sessionID);
+			}else {
+				System.out.println("Session Delete Fail : "+sessionID);
 			}
 		}
+		
+		UserVO.clientList.remove(num);
 		
 		System.out.println("===== SESSION CLIENT LIST =====");
 		for (int i = 0; i < clientList.size(); i++) {

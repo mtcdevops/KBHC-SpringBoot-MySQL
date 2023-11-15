@@ -29,6 +29,15 @@ public class Client {
 		}
 		
 //		System.out.println("CLIENT IP :"+ip);
-		return ip;
+		
+		String userAgent = request.getHeader("User-Agent");
+
+        if (userAgent != null && userAgent.contains("Mobile")) {
+            // 모바일 디바이스에 대한 처리
+            return "[mobile] : "+ip;
+        } else {
+            // 데스크톱 디바이스에 대한 처리
+            return "[pc] : "+ ip;
+        }
 	}
 }

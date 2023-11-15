@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data   // getter / setter / toString() 사용
 @NoArgsConstructor  // 생성자를 사용하지 않도록 선언
 public class ClientVO {
+	private int num;
     private String ip;
     private String sessionID;
 }

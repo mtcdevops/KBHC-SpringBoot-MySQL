@@ -8,6 +8,7 @@
 <% PCMonitorVO pcMonitorVO = new PCMonitorVO();%>
 <% UserVO user = (UserVO)session.getAttribute("user"); %>
 <% String clientIP = (String)request.getAttribute("clientIP"); %>
+<% int userSessionListLangth = (int)request.getAttribute("userSessionListLangth"); %>
 <main>
 	<div class="container-fluid px-4">
 		<% if(user != null){ %>
@@ -26,6 +27,9 @@
 			<div class="card-header">
 				<i class="fas fa-table me-1"></i>
 				SESSION IP LIST
+				<% for(int i = 0 ; i < user.getClientList().size();i++){ %>
+				<p><%=user.getClientList().get(i) %></p>
+				<% } %>
 			</div>
 			<div class="card-body" id="ServerExceptionLog">
 				<table id="">
@@ -40,7 +44,7 @@
 					<tbody>
 						<% for(int i = 0 ; i < user.getClientList().size();i++){ %>
 						<tr>
-							<th><%=i %></th>
+							<th><%=user.getClientList().get(i).getNum() %></th>
 							<th>|<%=user.getClientList().get(i).getIp() %></th>
 							<th id="<%=user.getClientList().get(i).getSessionID() %>" onmouseover="getSessionID(`<%=user.getClientList().get(i).getSessionID() %>`)">| ************************************** </th>
 							<th><button onclick="getSessionID(`<%=user.getClientList().get(i).getSessionID() %>`)">Check Session ID</button></th>

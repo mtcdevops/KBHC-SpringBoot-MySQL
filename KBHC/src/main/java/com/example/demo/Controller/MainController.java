@@ -50,7 +50,6 @@ public class MainController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	
 	@GetMapping({"index",""})
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("index");
@@ -67,6 +66,7 @@ public class MainController {
 		UserVO user = (UserVO) session.getAttribute("user");
 		session.setAttribute("user", user);
 		modelAndView.addObject("clientIP",ip);
+		modelAndView.addObject("userSessionListLangth",num);
 		
 		/* CPU 사용량 */
 		PCMonitorVO pcMonitorVO = new PCMonitorVO();
@@ -79,7 +79,6 @@ public class MainController {
 	public ModelAndView getLogin(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("login");
 		System.out.println("Login Page");
-		
 		 try{
 			modelAndView.addObject("hostname", InetAddress.getLocalHost().getHostName());
 			modelAndView.addObject("ip", InetAddress.getLocalHost().getHostAddress());
@@ -96,15 +95,16 @@ public class MainController {
 		return modelAndView;
 	}
 	
+	static int num;
 	@PostMapping("login")
 	public String postLogin(HttpServletRequest request, HttpServletResponse response) {
 		
 		UserVO user = new UserVO();
-
+		num ++;
+		user.setNum(num);
 		user.setEmail(request.getParameter("inputEmail"));
 		user.setPassword(request.getParameter("inputPassword"));
 		user.setClientIP(new Client().getRemoteIP(request));
-		System.out.println(user.toString());
 		ModelAndView modelAndView = new ModelAndView("index");
 		
 		/* session 등록 */
@@ -116,6 +116,8 @@ public class MainController {
 		session.setAttribute("user", user);
 		session.setAttribute("ip", user.getClientIP());
 		session.setMaxInactiveInterval(1800); // Session이 30분동안 유지
+
+		System.out.println(user.toString());
 //		return modelAndView;
 		return "redirect:/index";
 	}
