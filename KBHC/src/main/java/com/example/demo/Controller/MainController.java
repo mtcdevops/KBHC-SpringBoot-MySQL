@@ -89,6 +89,7 @@ public class MainController {
 		}
 		catch( UnknownHostException e ){
 		  e.printStackTrace();
+		  logger.info("Exception : "+e);
 		}
 		
 		/* CPU 사용량 */
