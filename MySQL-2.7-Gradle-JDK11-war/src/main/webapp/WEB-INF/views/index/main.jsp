@@ -23,7 +23,7 @@
 		<h1 class="mt-4">MySQL Duplication Test</h1>
 		<%} %>
 		<ol class="breadcrumb mb-4"> 
-			<li class="breadcrumb-item active"><%= dataInfo.getTotal() %> Read Replica DB : [<%=server_name %>]</li>
+			<li class="breadcrumb-item active">MySQL Query Current Count</li>
 		</ol>
 		<button id="deleteSession">Delete Session</button>
 		
@@ -48,18 +48,18 @@
 			</div>
 			<div class="col-xl-3 col-md-6">
 			    <div class="card bg-success text-white mb-4">
-			        <div class="card-body">WebApp READ [<%=server_name %>]</div>
+			        <div class="card-body">Read Replica DB</div>
 			        <div class="card-footer d-flex align-items-center justify-content-between" id="WebApp_READ">
-			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getAS_READ()%></a>
+			            <a class="small text-white stretched-link" href="#">[<%=server_name %>]</a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
 			    </div>
 			</div>
 			<div class="col-xl-3 col-md-6">
 			    <div class="card bg-danger text-white mb-4">
-			        <div class="card-body">WebApp Write</div>
+			        <div class="card-body">ToTal Count</div>
 			        <div class="card-footer d-flex align-items-center justify-content-between" id="WebApp_Write">
-			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_WRITE()%></a>
+			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getTotal() %></a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 			        </div>
 			    </div>
