@@ -66,11 +66,11 @@ public class DataServiceImp implements DataService {
 	}
 	
 	/**
-	 * 1초에 1번 Auto Select > 화면이 호출될때마다 자동으로 Select됨
+	 * 1초에 1번 1000 Auto Select > 화면이 호출될때마다 자동으로 Select됨
 	 * @return 
 	 */
 	@Transactional(readOnly = true)
-	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
+	@Scheduled(fixedDelay = 50, zone = "Asia/Seoul")
 	public DataInfoVO selectCountData() {
 		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);
 		AutoCRUD_thread insert = null;
@@ -111,7 +111,7 @@ public class DataServiceImp implements DataService {
 		return true;
 	}
 	
-	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
+	@Scheduled(fixedDelay = 50, zone = "Asia/Seoul")
 	@Override
 	public DBServerInfoVO showServerID() {
 		
