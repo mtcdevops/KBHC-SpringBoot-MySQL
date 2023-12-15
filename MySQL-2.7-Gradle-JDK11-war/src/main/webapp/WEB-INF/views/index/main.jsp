@@ -30,7 +30,7 @@
 		<div class="row" id="countData">
 			<div class="col-xl-3 col-md-6">
 			    <div class="card bg-primary text-white mb-4">
-			        <div class="card-body">LOCAL READ [<%=server_name %>]</div>
+			        <div class="card-body">READ [<%=server_name %>]</div>
 			        <div class="card-footer d-flex align-items-center justify-content-between" id="LOCAL_READ">
 			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_READ() %></a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -39,7 +39,7 @@
 			</div>
 			<div class="col-xl-3 col-md-6">
 			    <div class="card bg-warning text-white mb-4">
-			        <div class="card-body">LOCAL WRITE </div>
+			        <div class="card-body">WRITE </div>
 			        <div class="card-footer d-flex align-items-center justify-content-between" id="LOCAL_WRITE">
 			            <a class="small text-white stretched-link" href="#"><%= dataInfo.getLOCAL_WRITE() %></a>
 			            <div class="small text-white"><i class="fas fa-angle-right"></i></div>

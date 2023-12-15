@@ -1,23 +1,33 @@
 spring:
   # MySQL DB 설정
   datasource:
-    initialization-mode: never
     # Resd replica 구성
     master: # Write(Insert, Update, Delete)
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-#      url: jdbc:log4jdbc:mysql://kms-mysql.mysql.database.azure.com:3306/test?serverTimezone=UTC
+#      jdbc-url: jdbc:log4jdbc:mysql://kms-mysql.mysql.database.azure.com:3306/test?serverTimezone=UTC
+#      username: master
+#      password: megazone!234
       jdbc-url: jdbc:log4jdbc:mysql://kn3-kbh-prd-ocareplus-hic-rdb-myd.mysql.database.azure.com:3306/test?serverTimezone=UTC
-      read-only: false
       username: azureadmin
       password: zpdlql1234!
-#      
+      read-only: false
+      
+
     slave:  # Read(Select)
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-#      url: jdbc:log4jdbc:mysql:loadbalance://kms-mysql-slave.mysql.database.azure.com:3306,kms-mysql-slave2.mysql.database.azure.com:3306/test?serverTimezone=UTC
-      jdbc-url: jdbc:log4jdbc:mysql:loadbalance://kn3-kbh-prd-ocareplus-hic-rdb-myd-rp5.mysql.database.azure.com:3306,kn3-kbh-prd-ocareplus-hic-rdb-myd-rp6.mysql.database.azure.com:3306/test?serverTimezone=UTC
-      read-only: true # Slave DB는 Read만
+#      jdbc-url: jdbc:log4jdbc:mysql:loadbalance://kms-mysql-slave2.mysql.database.azure.com:3306,kms-mysql-slave1.mysql.database.azure.com:3306/test?serverTimezone=UTC
+#      username: master
+#      password: megazone!234
+      jdbc-url: jdbc:log4jdbc:mysql:loadbalance://kn3-kbh-1d-ocareplus-hic-rdb-myd-rp5.mysql.database.azure.com:3306,kn3-kbh-prd-ocareplus-hic-rdb-myd-rp6.mysql.database.azure.com:3306/test?serverTimezone=UTC
       username: azureadmin
       password: zpdlql1234!
+      read-only: true # Slave DB는 Read만
+      # 로드 밸런싱을 위한 속성 설정
+      properties:
+        # 로드 밸런싱을 위한 연결 그룹 설정
+        loadBalanceConnectionGroup: first
+        # JMX를 통한 로드 밸런싱 연결 관리를 활성화
+        ha.enableJMX: true
     
   mvc:
     view:

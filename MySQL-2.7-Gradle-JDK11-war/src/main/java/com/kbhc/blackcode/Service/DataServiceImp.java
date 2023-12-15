@@ -36,7 +36,6 @@ public class DataServiceImp implements DataService {
 //	private final DataSource master;
 //	private final DataSource slave;
 	
-	private int speed = 1000;
 	public DataServiceImp(SqlSession sqlSession,
 			@Qualifier("masterSqlSession") SqlSession masterSqlSession,
 			@Qualifier("slaveSqlSession") SqlSession slaveSqlSession) {
@@ -71,7 +70,7 @@ public class DataServiceImp implements DataService {
 	 * @return 
 	 */
 	@Transactional(readOnly = true)
-//	@Scheduled(fixedDelay = 2000, zone = "Asia/Seoul")
+	@Scheduled(fixedDelay = 1000, zone = "Asia/Seoul")
 	public DataInfoVO selectCountData() {
 		DataMapper dm = slaveSqlSession.getMapper(DataMapper.class);
 		AutoCRUD_thread insert = null;
